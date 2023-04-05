@@ -1,9 +1,22 @@
-const http = require('http');
+const http = require("http");
 
-const routes = require('./clean up/routes');
+const express = require("express");
 
-console.log(routes.someText);
+const app = express();
 
-const server = http.createServer(routes.handler);
+app.use((req, res, next)=> {
+    console.log("I am inside middleware");
+    next();
+});
 
-server.listen(9000);
+app.use((req,res, next) =>{
+    console.log("I am inside another middleware");
+    res.send("hello from express.js");
+});
+
+
+const server = http.createServer(app);
+
+server.listen(4000, ()=>{
+    console.log("server is connected ");
+})
